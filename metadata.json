@@ -1,0 +1,5 @@
+{
+  "name": "Expense & Earnings Tracker",
+  "description": "An application for entering and monitoring personal expenses and earnings. Users can create notebooks to organize their financial entries, which can be downloaded as spreadsheets.",
+  "requestFramePermissions": []
+}
