@@ -86,7 +86,6 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
         <p className="text-slate-500 mt-1 text-sm font-medium">Smart Expense Monitoring</p>
       </header>
       
-      {/* Quick Stats & Data Management */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-6 rounded-3xl">
             <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest mb-4">Cloud Simulation</h3>
@@ -150,16 +149,17 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
                       <button
                         onClick={(e) => { 
                           e.stopPropagation(); 
+                          e.preventDefault();
                           onDeleteNotebook(notebook.id); 
                         }}
-                        className="p-2 text-slate-600 hover:text-red-400 transition-colors"
-                        aria-label="Delete"
+                        className="p-2 text-slate-500 hover:text-red-400 transition-colors bg-slate-900/40 rounded-xl"
+                        aria-label="Delete Notebook"
                       >
                         <TrashIcon />
                       </button>
                   </div>
                   <h3 className="text-lg font-black text-white truncate">{notebook.name}</h3>
-                  <p className="text-xs text-slate-500 mt-1 font-bold">{notebook.transactions.length} ENTRIES</p>
+                  <p className="text-xs text-slate-500 mt-1 font-bold uppercase tracking-wider">{notebook.transactions.length} ENTRIES</p>
                 </div>
               </div>
             ))}
@@ -167,15 +167,14 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
         )}
       </div>
 
-      {/* FAB for creation */}
       <button 
         onClick={() => setShowCreateForm(true)}
         className="fixed bottom-6 right-6 w-16 h-16 bg-sky-500 text-white rounded-full shadow-2xl flex items-center justify-center transition-transform active:scale-90 z-40 border-4 border-slate-900"
+        aria-label="Create New Notebook"
       >
         <PlusIcon />
       </button>
 
-      {/* Create Modal (Bottom Sheet Style) */}
       {showCreateForm && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-end justify-center p-0" onClick={() => setShowCreateForm(false)}>
             <div className="bg-slate-800 w-full max-w-lg rounded-t-[2.5rem] p-8 space-y-6 shadow-2xl animate-in slide-in-from-bottom duration-300" onClick={e => e.stopPropagation()}>

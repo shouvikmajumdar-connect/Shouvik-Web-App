@@ -176,7 +176,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
         <h1 className="text-2xl font-bold text-white text-right">{notebook.name}</h1>
       </header>
       
-      {/* Financial Health Summary */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700/50">
             <div className="text-center space-y-4">
@@ -199,7 +198,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
             </div>
         </div>
 
-        {/* AI Insights Card */}
         <div className="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700/50 flex flex-col justify-center">
             {aiInsight ? (
               <div className="space-y-3">
@@ -227,7 +225,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
         </div>
       </div>
 
-      {/* Spend Breakdown */}
       {categoryData.length > 0 && (
         <div className="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700/50">
             <h3 className="text-sm font-bold text-white mb-4">Spending by Category</h3>
@@ -250,7 +247,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
         </div>
       )}
 
-      {/* Search & Filters */}
       <div className="bg-slate-800 p-4 rounded-2xl shadow-lg space-y-4 border border-slate-700/50">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2 w-full md:w-auto">
@@ -297,7 +293,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
         </div>
       </div>
 
-      {/* Transaction List */}
       <div className="space-y-3">
         {filteredAndSortedTransactions.length > 0 ? (
           filteredAndSortedTransactions.map(t => (
@@ -334,7 +329,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
         )}
       </div>
 
-      {/* Mobile Floating Action Button */}
       <button 
         onClick={handleAddTransaction}
         className="fixed bottom-6 right-6 w-14 h-14 bg-sky-500 hover:bg-sky-400 text-white rounded-full shadow-2xl flex items-center justify-center transition-transform active:scale-90 z-40 border-4 border-slate-900"
