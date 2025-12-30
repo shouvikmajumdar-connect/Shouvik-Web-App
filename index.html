@@ -13,23 +13,38 @@
     <link rel="manifest" href="/manifest.json" />
     
     <script>
-      // Global polyfill for process.env to prevent ReferenceErrors in browser
+      // Global polyfill for process.env (Required for some libraries)
       window.process = window.process || { env: { API_KEY: "" } };
+
+      // Catch errors that happen during script loading or early execution
+      window.onerror = (message, source, lineno, colno, error) => {
+        console.error("Global Startup Error:", message, error);
+        const loader = document.getElementById('boot-loader');
+        if (loader) {
+          loader.innerHTML = `
+            <div style="padding: 24px; color: #ef4444; font-family: system-ui, sans-serif; text-align: center; max-width: 400px; margin: auto;">
+              <div style="font-size: 40px; margin-bottom: 16px;">⚠️</div>
+              <h2 style="font-weight: 900; margin-bottom: 8px; color: white;">Startup Error</h2>
+              <p style="font-size: 14px; opacity: 0.8; line-height: 1.5; margin-bottom: 20px;">${message}</p>
+              <button onclick="window.location.reload()" style="padding: 12px 24px; background: #0ea5e9; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);">Retry Loading</button>
+            </div>
+          `;
+        }
+      };
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-      /* Prevent elastic scrolling/bounce on mobile for a more app-like feel */
+      /* Prevent elastic scrolling and provide a clean app background */
       html, body {
         overscroll-behavior-y: contain;
         -webkit-tap-highlight-color: transparent;
-        background-color: #0f172a; /* Slate-900 */
+        background-color: #0f172a;
         margin: 0;
         padding: 0;
         width: 100%;
         height: 100%;
-        overflow-x: hidden;
       }
       #root {
         min-height: 100vh;
@@ -37,22 +52,20 @@
         flex-direction: column;
       }
       .initial-loader {
+        position: fixed;
+        inset: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100vh;
-        color: #94a3b8;
-        font-family: sans-serif;
-        font-weight: 600;
-        letter-spacing: 0.05em;
         background-color: #0f172a;
+        z-index: 9999;
       }
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
+      @keyframes pulse-logo {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.7; transform: scale(0.98); }
       }
       .pulse {
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        animation: pulse-logo 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
       }
     </style>
   <script type="importmap">
@@ -70,15 +83,15 @@
 </head>
   <body class="bg-slate-900 text-slate-100">
     <div id="root">
-      <!-- This placeholder is replaced by React on successful mount -->
+      <!-- Loader is inside #root so React replaces it automatically on mount -->
       <div class="initial-loader" id="boot-loader">
         <div style="text-align: center;">
-          <div style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 900; color: #38bdf8;" class="pulse">Track.it</div>
-          <div style="font-size: 0.75rem; opacity: 0.5; text-transform: uppercase;">Initializing...</div>
+          <div style="margin-bottom: 1rem; font-size: 2.5rem; font-weight: 900; color: #38bdf8; letter-spacing: -0.05em;" class="pulse italic">Track.it</div>
+          <div style="font-size: 0.7rem; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.25em; font-weight: 700;">Securely Initializing</div>
         </div>
       </div>
     </div>
-    <!-- Vite bundle entry point -->
+    <!-- Vite handles the path transformation during the build process -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
