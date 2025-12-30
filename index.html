@@ -22,11 +22,14 @@
         const loader = document.getElementById('boot-loader');
         if (loader) {
           loader.innerHTML = `
-            <div style="padding: 24px; color: #ef4444; font-family: system-ui, sans-serif; text-align: center; max-width: 400px; margin: auto;">
-              <div style="font-size: 40px; margin-bottom: 16px;">⚠️</div>
-              <h2 style="font-weight: 900; margin-bottom: 8px; color: white;">Startup Error</h2>
-              <p style="font-size: 14px; opacity: 0.8; line-height: 1.5; margin-bottom: 20px;">${message}</p>
-              <button onclick="window.location.reload()" style="padding: 12px 24px; background: #0ea5e9; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);">Retry Loading</button>
+            <div style="padding: 24px; color: #ef4444; font-family: system-ui, sans-serif; text-align: center; max-width: 400px; margin: auto; background: #0f172a; position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000;">
+              <div style="font-size: 48px; margin-bottom: 20px;">🚨</div>
+              <h2 style="font-weight: 900; margin-bottom: 8px; color: white; font-size: 24px;">Load Error</h2>
+              <p style="font-size: 14px; opacity: 0.8; line-height: 1.6; margin-bottom: 24px; color: #94a3b8;">
+                The application could not be started. This usually happens due to a connection issue or a browser incompatibility.<br>
+                <small style="display: block; margin-top: 10px; font-family: monospace; background: #1e293b; padding: 8px; border-radius: 6px;">${message}</small>
+              </p>
+              <button onclick="window.location.reload()" style="padding: 14px 28px; background: #0ea5e9; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);">Reload Application</button>
             </div>
           `;
         }
@@ -45,11 +48,11 @@
         padding: 0;
         width: 100%;
         height: 100%;
+        overflow: hidden;
       }
       #root {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
+        height: 100%;
+        width: 100%;
       }
       .initial-loader {
         position: fixed;
@@ -91,7 +94,7 @@
         </div>
       </div>
     </div>
-    <!-- Vite handles the path transformation during the build process -->
-    <script type="module" src="/index.tsx"></script>
+    <!-- Vite handles the path transformation. Relative path is safer for various deployment roots. -->
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>

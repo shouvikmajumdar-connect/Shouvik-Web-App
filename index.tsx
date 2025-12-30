@@ -12,12 +12,14 @@ if (rootElement) {
         <App />
       </React.StrictMode>
     );
-    console.log("Track.it: DOM hydration successful.");
+    console.log("Track.it: Application initialization started.");
   } catch (err) {
-    console.error("React Mounting Failed:", err);
-    // The HTML-level error handler will catch this if it bubbles
+    console.error("Track.it: Critical Mounting Failure", err);
+    // Let the global error handler in index.html take over
     throw err;
   }
 } else {
-  console.error("Critical: The application root element was not found in the document.");
+  const msg = "Critical Error: The application root element (#root) was not found.";
+  console.error(msg);
+  alert(msg);
 }
