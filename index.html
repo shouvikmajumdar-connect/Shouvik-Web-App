@@ -15,35 +15,6 @@
     <script>
       // Global polyfill for process.env
       window.process = window.process || { env: { API_KEY: "" } };
-
-      // Catch errors during the initial module load phase
-      window.addEventListener('error', function(e) {
-        if (e.target.tagName === 'SCRIPT') {
-          console.error("Critical: Failed to load module script at " + e.target.src);
-          showError("Module Load Failure: The server could not provide the application script correctly.");
-        }
-      }, true);
-
-      window.onerror = (message) => {
-        showError(message);
-      };
-
-      function showError(msg) {
-        const loader = document.getElementById('boot-loader');
-        if (loader) {
-          loader.innerHTML = `
-            <div style="padding: 24px; color: #ef4444; font-family: system-ui, sans-serif; text-align: center; max-width: 400px; margin: auto; background: #0f172a; position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000;">
-              <div style="font-size: 48px; margin-bottom: 20px;">🚨</div>
-              <h2 style="font-weight: 900; margin-bottom: 8px; color: white; font-size: 24px;">Startup Error</h2>
-              <p style="font-size: 14px; opacity: 0.8; line-height: 1.6; margin-bottom: 24px; color: #94a3b8;">
-                The application could not be initialized.<br>
-                <small style="display: block; margin-top: 10px; font-family: monospace; background: #1e293b; padding: 12px; border-radius: 8px; border: 1px solid #334155; color: #f87171; word-break: break-all;">${msg}</small>
-              </p>
-              <button onclick="window.location.reload()" style="padding: 14px 28px; background: #0ea5e9; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);">Try Again</button>
-            </div>
-          `;
-        }
-      }
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -102,7 +73,10 @@
         </div>
       </div>
     </div>
-    <!-- Absolute path is required for Vite to correctly handle the TSX transformation -->
+    <!-- 
+      The entry point for the Vite application. 
+      Vite will automatically transform this into a bundled .js file during build.
+    -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
