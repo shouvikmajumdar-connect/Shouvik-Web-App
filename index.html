@@ -46,6 +46,14 @@
         font-family: sans-serif;
         font-weight: 600;
         letter-spacing: 0.05em;
+        background-color: #0f172a;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+      .pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
       }
     </style>
   <script type="importmap">
@@ -63,14 +71,15 @@
 </head>
   <body class="bg-slate-900 text-slate-100">
     <div id="root">
+      <!-- This placeholder is automatically replaced by React on mount -->
       <div class="initial-loader">
         <div style="text-align: center;">
-          <div style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 900; color: #38bdf8;">Track.it</div>
+          <div style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 900; color: #38bdf8;" class="pulse">Track.it</div>
           <div style="font-size: 0.75rem; opacity: 0.5; text-transform: uppercase;">Initializing...</div>
         </div>
       </div>
     </div>
-    <!-- Vite handles the compilation and replacement of this script during build -->
+    <!-- Vite handles the compilation of index.tsx -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
