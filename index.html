@@ -14,6 +14,7 @@
     
     <script>
       // Global polyfill for process.env to prevent ReferenceErrors in browser
+      // This must be the first script to run
       window.process = window.process || { env: { API_KEY: "" } };
     </script>
 
@@ -29,9 +30,22 @@
         padding: 0;
         width: 100%;
         height: 100%;
+        overflow-x: hidden;
       }
       #root {
         min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .initial-loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: #94a3b8;
+        font-family: sans-serif;
+        font-weight: 600;
+        letter-spacing: 0.05em;
       }
     </style>
   <script type="importmap">
@@ -48,8 +62,15 @@
 </script>
 </head>
   <body class="bg-slate-900 text-slate-100">
-    <div id="root"></div>
-    <!-- Vite handles the compilation of this TSX file -->
+    <div id="root">
+      <div class="initial-loader">
+        <div style="text-align: center;">
+          <div style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 900; color: #38bdf8;">Track.it</div>
+          <div style="font-size: 0.75rem; opacity: 0.5; text-transform: uppercase;">Initializing...</div>
+        </div>
+      </div>
+    </div>
+    <!-- Vite handles the compilation and replacement of this script during build -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
