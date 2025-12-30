@@ -13,33 +13,42 @@
     <link rel="manifest" href="/manifest.json" />
     
     <script>
-      // Global polyfill for process.env (Required for some libraries)
+      // Global polyfill for process.env
       window.process = window.process || { env: { API_KEY: "" } };
 
-      // Catch errors that happen during script loading or early execution
-      window.onerror = (message, source, lineno, colno, error) => {
-        console.error("Global Startup Error:", message, error);
+      // Catch errors during the initial module load phase
+      window.addEventListener('error', function(e) {
+        if (e.target.tagName === 'SCRIPT') {
+          console.error("Critical: Failed to load module script at " + e.target.src);
+          showError("Module Load Failure: The server could not provide the application script correctly.");
+        }
+      }, true);
+
+      window.onerror = (message) => {
+        showError(message);
+      };
+
+      function showError(msg) {
         const loader = document.getElementById('boot-loader');
         if (loader) {
           loader.innerHTML = `
             <div style="padding: 24px; color: #ef4444; font-family: system-ui, sans-serif; text-align: center; max-width: 400px; margin: auto; background: #0f172a; position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10000;">
               <div style="font-size: 48px; margin-bottom: 20px;">🚨</div>
-              <h2 style="font-weight: 900; margin-bottom: 8px; color: white; font-size: 24px;">Load Error</h2>
+              <h2 style="font-weight: 900; margin-bottom: 8px; color: white; font-size: 24px;">Startup Error</h2>
               <p style="font-size: 14px; opacity: 0.8; line-height: 1.6; margin-bottom: 24px; color: #94a3b8;">
-                The application could not be started. This usually happens due to a connection issue or a browser incompatibility.<br>
-                <small style="display: block; margin-top: 10px; font-family: monospace; background: #1e293b; padding: 8px; border-radius: 6px;">${message}</small>
+                The application could not be initialized.<br>
+                <small style="display: block; margin-top: 10px; font-family: monospace; background: #1e293b; padding: 12px; border-radius: 8px; border: 1px solid #334155; color: #f87171; word-break: break-all;">${msg}</small>
               </p>
-              <button onclick="window.location.reload()" style="padding: 14px 28px; background: #0ea5e9; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);">Reload Application</button>
+              <button onclick="window.location.reload()" style="padding: 14px 28px; background: #0ea5e9; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);">Try Again</button>
             </div>
           `;
         }
-      };
+      }
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-      /* Prevent elastic scrolling and provide a clean app background */
       html, body {
         overscroll-behavior-y: contain;
         -webkit-tap-highlight-color: transparent;
@@ -86,7 +95,6 @@
 </head>
   <body class="bg-slate-900 text-slate-100">
     <div id="root">
-      <!-- Loader is inside #root so React replaces it automatically on mount -->
       <div class="initial-loader" id="boot-loader">
         <div style="text-align: center;">
           <div style="margin-bottom: 1rem; font-size: 2.5rem; font-weight: 900; color: #38bdf8; letter-spacing: -0.05em;" class="pulse italic">Track.it</div>
@@ -94,7 +102,7 @@
         </div>
       </div>
     </div>
-    <!-- Vite handles the path transformation. Relative path is safer for various deployment roots. -->
-    <script type="module" src="index.tsx"></script>
+    <!-- Absolute path is required for Vite to correctly handle the TSX transformation -->
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>
