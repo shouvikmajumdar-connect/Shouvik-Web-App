@@ -14,7 +14,6 @@
     
     <script>
       // Global polyfill for process.env to prevent ReferenceErrors in browser
-      // This must be the first script to run
       window.process = window.process || { env: { API_KEY: "" } };
     </script>
 
@@ -71,15 +70,15 @@
 </head>
   <body class="bg-slate-900 text-slate-100">
     <div id="root">
-      <!-- This placeholder is automatically replaced by React on mount -->
-      <div class="initial-loader">
+      <!-- This placeholder is replaced by React on successful mount -->
+      <div class="initial-loader" id="boot-loader">
         <div style="text-align: center;">
           <div style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 900; color: #38bdf8;" class="pulse">Track.it</div>
           <div style="font-size: 0.75rem; opacity: 0.5; text-transform: uppercase;">Initializing...</div>
         </div>
       </div>
     </div>
-    <!-- Vite handles the compilation of index.tsx -->
+    <!-- Vite bundle entry point -->
     <script type="module" src="/index.tsx"></script>
   </body>
 </html>
