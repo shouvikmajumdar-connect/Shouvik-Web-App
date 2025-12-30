@@ -1,9 +1,7 @@
-
 import React, { useState, useMemo, useCallback } from 'react';
 import { TransactionType, TransactionCategory } from '../types';
 import type { Notebook, Transaction } from '../types';
-import { ArrowLeftIcon, DownloadIcon, PlusIcon, EditIcon, TrashIcon, SparklesIcon } from './icons';
-import { GoogleGenAI } from "@google/genai";
+import { ArrowLeftIcon, DownloadIcon, PlusIcon, EditIcon, TrashIcon } from './icons';
 
 interface NotebookViewProps {
   notebook: Notebook;
@@ -29,9 +27,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
   const [filterType, setFilterType] = useState<'all' | TransactionType.EARNING | TransactionType.EXPENDITURE>('all');
   const [sortOrder, setSortOrder] = useState<'date-desc' | 'date-asc' | 'amount-desc' | 'amount-asc'>('date-desc');
   
-  const [aiInsight, setAiInsight] = useState<string | null>(null);
-  const [isAiLoading, setIsAiLoading] = useState(false);
-
   const { totalEarnings, totalExpenditure, balance, categoryData } = useMemo(() => {
     const earnings = notebook.transactions
       .filter(t => t.type === TransactionType.EARNING)
@@ -88,29 +83,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
 
     return transactions;
   }, [notebook.transactions, filterType, searchTerm, sortOrder]);
-
-  const getAIInsights = async () => {
-    if (notebook.transactions.length === 0) return;
-    setIsAiLoading(true);
-    setAiInsight(null);
-
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const summary = notebook.transactions.slice(0, 20).map(t => `${t.date}: ${t.item} (${t.category}) - ${t.type === TransactionType.EXPENDITURE ? '-' : '+'}${t.amount}`).join('\n');
-      
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: `Analyze these recent financial transactions and provide a 3-sentence summary of spending habits and one specific tip to save money. Currency is ${notebook.currency}. Transactions:\n${summary}`,
-      });
-
-      setAiInsight(response.text);
-    } catch (error) {
-      console.error("AI Insight Error:", error);
-      setAiInsight("Could not fetch insights at this time. Please try again later.");
-    } finally {
-      setIsAiLoading(false);
-    }
-  };
 
   const handleAddTransaction = () => {
     setEditingTransaction(null);
@@ -176,7 +148,7 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
         <h1 className="text-2xl font-bold text-white text-right">{notebook.name}</h1>
       </header>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <div className="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700/50">
             <div className="text-center space-y-4">
                 <div>
@@ -197,32 +169,6 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
                 </div>
             </div>
         </div>
-
-        <div className="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700/50 flex flex-col justify-center">
-            {aiInsight ? (
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sky-400 font-bold">
-                    <SparklesIcon /> <span>AI Insights</span>
-                </div>
-                <p className="text-sm italic text-slate-300 leading-relaxed">"{aiInsight}"</p>
-                <button onClick={getAIInsights} className="text-xs text-slate-500 hover:text-sky-400">Refresh Advice</button>
-              </div>
-            ) : (
-              <div className="text-center space-y-4">
-                <p className="text-slate-400 text-sm">Need help managing your expenses?</p>
-                <button 
-                  onClick={getAIInsights} 
-                  disabled={isAiLoading || notebook.transactions.length === 0}
-                  className="flex items-center justify-center gap-2 w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-3 rounded-xl transition-all shadow-lg active:scale-95 disabled:opacity-50"
-                >
-                  {isAiLoading ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/20 border-t-white" />
-                  ) : <SparklesIcon />}
-                  {isAiLoading ? 'Analyzing...' : 'Get AI Recommendations'}
-                </button>
-              </div>
-            )}
-        </div>
       </div>
 
       {categoryData.length > 0 && (
@@ -230,7 +176,7 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
             <h3 className="text-sm font-bold text-white mb-4">Spending by Category</h3>
             <div className="space-y-3">
                 {categoryData.slice(0, 4).map(([cat, amount]) => {
-                    const percentage = (amount / totalExpenditure) * 100;
+                    const percentage = totalExpenditure > 0 ? (amount / totalExpenditure) * 100 : 0;
                     return (
                         <div key={cat} className="space-y-1">
                             <div className="flex justify-between text-xs text-slate-400">
