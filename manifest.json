@@ -1,21 +1,19 @@
+
 {
-  "name": "Track.it - Expense & Earnings Tracker",
+  "name": "Track.it Expense Tracker",
   "short_name": "Track.it",
-  "description": "An application for entering and monitoring personal expenses and earnings. Users can create notebooks to organize their financial entries, which can be downloaded as spreadsheets.",
-  "start_url": ".",
+  "description": "Smart local expense and earnings monitoring with AI insights.",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0ea5e9",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/2344/2344132.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ]
 }
