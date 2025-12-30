@@ -11,7 +11,7 @@ if (container) {
       <App />
     </React.StrictMode>
   );
-  console.log("Track.it: Mounted successfully.");
+  console.log("Track.it: Core application mounted.");
 } else {
-  console.error("Track.it: Failed to find the root element.");
+  console.error("Track.it: Root element not found.");
 }

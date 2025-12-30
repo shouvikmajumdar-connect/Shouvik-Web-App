@@ -6,20 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Track.it - Smart Expenses</title>
     
-    <!-- Android / PWA Meta Tags -->
+    <!-- PWA / Mobile Meta Tags -->
     <meta name="theme-color" content="#0f172a" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <link rel="manifest" href="/manifest.json" />
     
     <script>
-      // Global polyfill for process.env
+      // Polyfill for process.env
       window.process = window.process || { env: { API_KEY: "" } };
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
+      /* Smooth loading and app-like feel */
       html, body {
         overscroll-behavior-y: contain;
         -webkit-tap-highlight-color: transparent;
@@ -74,8 +75,8 @@
       </div>
     </div>
     <!-- 
-      The entry point for the Vite application. 
-      Vite will automatically transform this into a bundled .js file during build.
+      Referencing the entry point with a leading slash. 
+      Vite's server or build process will transform this .tsx into .js automatically.
     -->
     <script type="module" src="/index.tsx"></script>
   </body>
