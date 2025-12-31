@@ -43,6 +43,11 @@
         justify-content: center;
         background-color: #0f172a;
         z-index: 9999;
+        transition: opacity 0.5s ease-out, visibility 0.5s;
+      }
+      .initial-loader.hidden {
+        opacity: 0;
+        visibility: hidden;
       }
       @keyframes pulse-logo {
         0%, 100% { opacity: 1; transform: scale(1); }
@@ -65,18 +70,19 @@
 </script>
 </head>
   <body class="bg-slate-900 text-slate-100">
-    <div id="root">
-      <div class="initial-loader" id="boot-loader">
-        <div style="text-align: center;">
-          <div style="margin-bottom: 1rem; font-size: 2.5rem; font-weight: 900; color: #38bdf8; letter-spacing: -0.05em;" class="pulse italic">Track.it</div>
-          <div style="font-size: 0.7rem; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.25em; font-weight: 700;">Securely Initializing</div>
-        </div>
+    <div id="root"></div>
+    
+    <div class="initial-loader" id="boot-loader">
+      <div style="text-align: center;">
+        <div style="margin-bottom: 1rem; font-size: 2.5rem; font-weight: 900; color: #38bdf8; letter-spacing: -0.05em;" class="pulse italic">Track.it</div>
+        <div style="font-size: 0.7rem; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.25em; font-weight: 700;">Securely Initializing</div>
       </div>
     </div>
+
     <!-- 
-      Referencing the entry point with a leading slash. 
-      Vite's server or build process will transform this .tsx into .js automatically.
+      Using a relative path for the entry point. 
+      Vite will transform this .tsx into a valid .js module.
     -->
-    <script type="module" src="/index.tsx"></script>
+    <script type="module" src="index.tsx"></script>
   </body>
 </html>
