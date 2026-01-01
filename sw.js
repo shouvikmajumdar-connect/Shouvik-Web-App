@@ -1,9 +1,9 @@
-
-const CACHE_NAME = 'track-it-v2';
+const CACHE_NAME = 'track-it-v3';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
+  './',
+  'index.html',
+  'manifest.json',
+  'logo.png',
   'https://cdn.tailwindcss.com'
 ];
 

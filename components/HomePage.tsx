@@ -80,12 +80,17 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
 
   return (
     <div className="space-y-8 pb-20">
-      <header className="flex flex-col items-center pt-12 pb-4">
-        <img 
-          src="/logo.png" 
-          alt="Track.it Logo" 
-          className="w-32 h-32 mb-2 rounded-3xl shadow-2xl ring-4 ring-slate-800 animate-in zoom-in duration-500"
-        />
+      <header className="flex flex-col items-center pt-16 pb-6">
+        <div className="w-44 h-44 relative bg-[#00162d] rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-emerald-500/10 ring-1 ring-white/5 overflow-hidden flex items-center justify-center">
+            <img 
+              src="logo.png" 
+              alt="Track.it Logo" 
+              className="w-full h-full object-contain fade-in"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+        </div>
       </header>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -106,7 +111,7 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
                 </button>
                 <input type="file" ref={fileInputRef} onChange={handleFileImport} accept=".json" className="hidden" />
             </div>
-            <p className="text-[10px] text-slate-500 mt-3 text-center">Data is stored locally in your browser. Use Backup for safety.</p>
+            <p className="text-[10px] text-slate-500 mt-3 text-center">Data is stored locally. Use Backup for safety.</p>
         </div>
 
         <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-6 rounded-3xl flex flex-col justify-center">

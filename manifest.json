@@ -2,20 +2,20 @@
   "name": "Track.it Expense Tracker",
   "short_name": "Track.it",
   "description": "Smart local expense and earnings monitoring.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
     },
     {
-      "src": "/logo.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "192x192"
     }

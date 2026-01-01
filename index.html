@@ -2,8 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Updated Website Icon to use the new logo -->
-    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="icon" type="image/png" href="logo.png" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Track.it - Smart Expenses</title>
@@ -13,19 +12,16 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Track.it" />
-    <!-- Updated Apple Home Screen Icon -->
-    <link rel="apple-touch-icon" href="/logo.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="logo.png" />
+    <link rel="manifest" href="manifest.json" />
     
     <script>
-      // Polyfill for process.env
       window.process = window.process || { env: { API_KEY: "" } };
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
-      /* Smooth loading and app-like feel */
       html, body {
         overscroll-behavior-y: contain;
         -webkit-tap-highlight-color: transparent;
@@ -56,33 +52,41 @@
         visibility: hidden;
       }
       @keyframes pulse-logo {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.8; transform: scale(0.95); }
+        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.1); }
+        50% { opacity: 0.9; transform: scale(0.98); box-shadow: 0 0 40px rgba(16, 185, 129, 0.3); }
       }
       .pulse {
-        animation: pulse-logo 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        animation: pulse-logo 2.5s ease-in-out infinite;
+      }
+      .fade-in {
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to { opacity: 1; transform: scale(1); }
       }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "vite": "https://esm.sh/vite@^7.3.0"
-  }
-}
-</script>
-</head>
+    <script type="importmap">
+    {
+      "imports": {
+        "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "vite": "https://esm.sh/vite@^7.3.0"
+      }
+    }
+    </script>
+  </head>
   <body class="bg-slate-900 text-slate-100">
     <div id="root"></div>
     
     <div class="initial-loader" id="boot-loader">
       <div style="text-align: center;">
-        <!-- Show logo in the boot loader -->
-        <img src="/logo.png" alt="Logo" style="width: 120px; height: 120px; margin-bottom: 1rem; border-radius: 24px;" class="pulse" />
-        <div style="font-size: 0.7rem; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.25em; font-weight: 700;">Securely Initializing</div>
+        <div style="width: 160px; height: 160px; margin: 0 auto 1.5rem; background: #00162d; border-radius: 40px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);" class="pulse">
+            <img src="logo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color:#10b981;font-weight:900;font-size:1.5rem\'>TRACK.IT</div>'" />
+        </div>
+        <div style="font-size: 0.65rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.3em; font-weight: 800; color: #10b981;">Securing Your Vault</div>
       </div>
     </div>
 
