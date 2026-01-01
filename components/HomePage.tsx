@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useRef } from 'react';
 import type { Notebook } from '../types';
 import { TrashIcon, DownloadIcon, UploadIcon, PlusIcon } from './icons';
@@ -81,9 +80,12 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
 
   return (
     <div className="space-y-8 pb-20">
-      <header className="text-center pt-4">
-        <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-emerald-400 tracking-tight italic">Track.it</h1>
-        <p className="text-slate-500 mt-1 text-sm font-medium">Smart Expense Monitoring</p>
+      <header className="flex flex-col items-center pt-12 pb-4">
+        <img 
+          src="/logo.png" 
+          alt="Track.it Logo" 
+          className="w-32 h-32 mb-2 rounded-3xl shadow-2xl ring-4 ring-slate-800 animate-in zoom-in duration-500"
+        />
       </header>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
