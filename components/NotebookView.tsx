@@ -152,7 +152,7 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
         <div className="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700/50">
             <div className="text-center space-y-4">
                 <div>
-                  <h3 className="text-sm font-medium text-slate-400 uppercase tracking-widest">Available Balance</h3>
+                  <h3 className="text-sm font-medium text-slate-400 uppercase tracking-widest">Net Balance</h3>
                   <p className={`text-4xl font-black mt-1 ${balance >= 0 ? 'text-sky-400' : 'text-orange-400'}`}>
                     {notebook.currency} {balance.toLocaleString()}
                   </p>
@@ -221,11 +221,11 @@ const NotebookView: React.FC<NotebookViewProps> = ({ notebook, onUpdateNotebook,
                     <button 
                         onClick={() => setFilterType(TransactionType.EXPENDITURE)} 
                         className={`px-3 py-1 rounded-md text-xs transition-colors ${filterType === TransactionType.EXPENDITURE ? 'bg-red-900/40 text-red-300' : 'text-slate-500'}`}
-                    >Spend</button>
+                    >Spent</button>
                     <button 
                         onClick={() => setFilterType(TransactionType.EARNING)} 
                         className={`px-3 py-1 rounded-md text-xs transition-colors ${filterType === TransactionType.EARNING ? 'bg-green-900/40 text-green-300' : 'text-slate-500'}`}
-                    >Earn</button>
+                    >Earned</button>
                 </div>
             </div>
             <div className="flex items-center gap-2">
@@ -338,10 +338,10 @@ const TransactionModal: React.FC<{
                 
                 <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-700">
                   <button type="button" onClick={() => setFormData(prev => ({...prev, type: TransactionType.EXPENDITURE}))} className={`flex-1 px-4 py-2.5 text-sm font-bold rounded-lg transition-all ${formData.type === TransactionType.EXPENDITURE ? 'bg-red-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}>
-                    Spend
+                    Spent
                   </button>
                   <button type="button" onClick={() => setFormData(prev => ({...prev, type: TransactionType.EARNING}))} className={`flex-1 px-4 py-2.5 text-sm font-bold rounded-lg transition-all ${formData.type === TransactionType.EARNING ? 'bg-green-600 text-white shadow-lg' : 'text-slate-500 hover:text-slate-300'}`}>
-                    Earn
+                    Earned
                   </button>
                 </div>
                 
