@@ -1,11 +1,18 @@
 {
-  "name": "Track.it Expense Tracker",
-  "short_name": "Track.it",
+  "name": "Traccia.it Expense Tracker",
+  "short_name": "Traccia.it",
   "description": "Smart local expense and earnings monitoring.",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "orientation": "portrait",
-  "icons": []
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
