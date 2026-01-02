@@ -1,6 +1,6 @@
 {
-  "name": "Traccia.it Expense Tracker",
-  "short_name": "Traccia.it",
+  "name": "Track.it Expense Tracker",
+  "short_name": "Track.it",
   "description": "Smart local expense and earnings monitoring.",
   "start_url": "./",
   "display": "standalone",
