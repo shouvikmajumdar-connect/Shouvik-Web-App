@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="icon" href="data:,">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Track.it - Smart Expenses</title>
@@ -12,7 +12,6 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Track.it" />
-    <link rel="apple-touch-icon" href="logo.png" />
     <link rel="manifest" href="manifest.json" />
     
     <script>
@@ -51,19 +50,12 @@
         opacity: 0;
         visibility: hidden;
       }
-      @keyframes pulse-logo {
-        0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.1); }
-        50% { opacity: 0.9; transform: scale(0.98); box-shadow: 0 0 40px rgba(16, 185, 129, 0.3); }
+      @keyframes pulse-text {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(0.98); }
       }
       .pulse {
-        animation: pulse-logo 2.5s ease-in-out infinite;
-      }
-      .fade-in {
-        animation: fadeIn 0.8s ease-out forwards;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.95); }
-        to { opacity: 1; transform: scale(1); }
+        animation: pulse-text 2.5s ease-in-out infinite;
       }
     </style>
     <script type="importmap">
@@ -82,11 +74,9 @@
     <div id="root"></div>
     
     <div class="initial-loader" id="boot-loader">
-      <div style="text-align: center;">
-        <div style="width: 160px; height: 160px; margin: 0 auto 1.5rem; background: #00162d; border-radius: 40px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);" class="pulse">
-            <img src="logo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'color:#10b981;font-weight:900;font-size:1.5rem\'>TRACK.IT</div>'" />
-        </div>
-        <div style="font-size: 0.65rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.3em; font-weight: 800; color: #10b981;">Securing Your Vault</div>
+      <div style="text-align: center;" class="pulse">
+        <div style="font-size: 2.5rem; font-weight: 900; font-style: italic; background: linear-gradient(to right, #38bdf8, #2dd4bf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.05em;">Track.it</div>
+        <div style="font-size: 0.6rem; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em; margin-top: 0.25rem;">Smart Expense Monitoring</div>
       </div>
     </div>
 

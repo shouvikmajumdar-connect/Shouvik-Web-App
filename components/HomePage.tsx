@@ -79,54 +79,46 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
   }, [notebooks, sortOrder]);
 
   return (
-    <div className="space-y-8 pb-20">
-      <header className="flex flex-col items-center pt-16 pb-6">
-        <div className="w-44 h-44 relative bg-[#00162d] rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.6)] shadow-emerald-500/10 ring-1 ring-white/5 overflow-hidden flex items-center justify-center">
-            <img 
-              src="logo.png" 
-              alt="Track.it Logo" 
-              className="w-full h-full object-contain fade-in"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
-        </div>
+    <div className="space-y-5 pb-20">
+      <header className="flex flex-col items-center py-6">
+        <h1 className="text-4xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-teal-400 mb-1 tracking-tighter">Track.it</h1>
+        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Smart Expense Monitoring</p>
       </header>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-6 rounded-3xl">
-            <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest mb-4">Cloud Simulation</h3>
-            <div className="flex gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-4 rounded-2xl">
+            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Cloud Simulation</h3>
+            <div className="flex gap-2">
                 <button 
                     onClick={exportBackup}
-                    className="flex-1 flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold py-3 rounded-2xl transition-all"
+                    className="flex-1 flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-bold py-2.5 rounded-xl transition-all"
                 >
                     <DownloadIcon /> Backup
                 </button>
                 <button 
                     onClick={handleImportClick}
-                    className="flex-1 flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold py-3 rounded-2xl transition-all"
+                    className="flex-1 flex items-center justify-center gap-2 bg-slate-700 hover:bg-slate-600 text-white text-[10px] font-bold py-2.5 rounded-xl transition-all"
                 >
                     <UploadIcon /> Restore
                 </button>
                 <input type="file" ref={fileInputRef} onChange={handleFileImport} accept=".json" className="hidden" />
             </div>
-            <p className="text-[10px] text-slate-500 mt-3 text-center">Data is stored locally. Use Backup for safety.</p>
+            <p className="text-[9px] text-slate-500 mt-2 text-center">Data is stored locally. Use Backup for safety.</p>
         </div>
 
-        <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-6 rounded-3xl flex flex-col justify-center">
-            <h3 className="text-xs font-black text-slate-500 uppercase tracking-widest mb-1">Total Assets</h3>
-            <p className="text-3xl font-black text-white">{notebooks.length} <span className="text-slate-500 text-sm font-normal">Notebooks</span></p>
+        <div className="bg-slate-800/50 backdrop-blur-md border border-slate-700/50 p-4 rounded-2xl flex flex-col justify-center items-center sm:items-start">
+            <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">Total Assets</h3>
+            <p className="text-2xl font-black text-white">{notebooks.length} <span className="text-slate-500 text-xs font-normal">Notebooks</span></p>
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div className="flex justify-between items-center flex-wrap gap-2">
-            <h2 className="text-xl font-black text-white px-2">Your Vault</h2>
+      <div className="space-y-3">
+        <div className="flex justify-between items-center flex-wrap gap-2 px-1">
+            <h2 className="text-lg font-black text-white">Your Vault</h2>
             <select
                 value={sortOrder}
                 onChange={(e) => setSortOrder(e.target.value as SortOrder)}
-                className="bg-slate-800 text-slate-300 border border-slate-700 rounded-xl px-3 py-1.5 text-xs focus:outline-none"
+                className="bg-slate-800 text-slate-300 border border-slate-700 rounded-lg px-2.5 py-1 text-[10px] focus:outline-none uppercase font-bold tracking-wide"
             >
                 <option value="date-desc">Newest</option>
                 <option value="name-asc">A-Z</option>
@@ -134,24 +126,24 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
         </div>
 
         {notebooks.length === 0 ? (
-          <div className="text-center py-20 bg-slate-800/30 rounded-3xl border-2 border-dashed border-slate-700/50">
-            <div className="w-16 h-16 bg-slate-700/30 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-600">
+          <div className="text-center py-12 bg-slate-800/30 rounded-2xl border-2 border-dashed border-slate-700/50">
+            <div className="w-12 h-12 bg-slate-700/30 rounded-full flex items-center justify-center mx-auto mb-3 text-slate-600">
                 <PlusIcon />
             </div>
-            <p className="text-slate-400 font-bold">The vault is empty</p>
-            <p className="text-slate-500 text-sm mt-1">Tap the plus button to start tracking</p>
+            <p className="text-slate-400 font-bold text-sm">The vault is empty</p>
+            <p className="text-slate-500 text-xs mt-1">Tap the plus button to start tracking</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {sortedNotebooks.map(notebook => (
-              <div key={notebook.id} className="group relative bg-slate-800 hover:bg-slate-700/80 border border-slate-700/50 rounded-3xl transition-all duration-300 active:scale-[0.98]">
+              <div key={notebook.id} className="group relative bg-slate-800 hover:bg-slate-700/80 border border-slate-700/50 rounded-2xl transition-all duration-300 active:scale-[0.98]">
                 <div 
                   onClick={() => onSelectNotebook(notebook.id)}
-                  className="p-6 cursor-pointer"
+                  className="p-5 cursor-pointer"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                      <div className="p-3 bg-sky-500/10 text-sky-400 rounded-2xl">
-                          <span className="text-lg font-bold">{notebook.currency}</span>
+                  <div className="flex justify-between items-start mb-3">
+                      <div className="p-2.5 bg-sky-500/10 text-sky-400 rounded-xl">
+                          <span className="text-base font-bold">{notebook.currency}</span>
                       </div>
                       <button
                         onClick={(e) => { 
@@ -159,14 +151,14 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
                           e.preventDefault();
                           onDeleteNotebook(notebook.id); 
                         }}
-                        className="p-2 text-slate-500 hover:text-red-400 transition-colors bg-slate-900/40 rounded-xl"
+                        className="p-2 text-slate-500 hover:text-red-400 transition-colors bg-slate-900/40 rounded-lg"
                         aria-label="Delete Notebook"
                       >
                         <TrashIcon />
                       </button>
                   </div>
-                  <h3 className="text-lg font-black text-white truncate">{notebook.name}</h3>
-                  <p className="text-xs text-slate-500 mt-1 font-bold uppercase tracking-wider">{notebook.transactions.length} ENTRIES</p>
+                  <h3 className="text-base font-black text-white truncate">{notebook.name}</h3>
+                  <p className="text-[10px] text-slate-500 mt-1 font-bold uppercase tracking-wider">{notebook.transactions.length} ENTRIES</p>
                 </div>
               </div>
             ))}
@@ -176,7 +168,7 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
 
       <button 
         onClick={() => setShowCreateForm(true)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-sky-500 text-white rounded-full shadow-2xl flex items-center justify-center transition-transform active:scale-90 z-40 border-4 border-slate-900"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-sky-500 text-white rounded-full shadow-2xl flex items-center justify-center transition-transform active:scale-90 z-40 border-4 border-slate-900"
         aria-label="Create New Notebook"
       >
         <PlusIcon />
@@ -184,10 +176,10 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
 
       {showCreateForm && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-end justify-center p-0" onClick={() => setShowCreateForm(false)}>
-            <div className="bg-slate-800 w-full max-w-lg rounded-t-[2.5rem] p-8 space-y-6 shadow-2xl animate-in slide-in-from-bottom duration-300" onClick={e => e.stopPropagation()}>
-                <div className="w-12 h-1.5 bg-slate-700 rounded-full mx-auto mb-2 opacity-50" />
-                <h2 className="text-2xl font-black text-white">New Notebook</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bg-slate-800 w-full max-w-lg rounded-t-[2rem] p-6 space-y-5 shadow-2xl animate-in slide-in-from-bottom duration-300" onClick={e => e.stopPropagation()}>
+                <div className="w-10 h-1 bg-slate-700 rounded-full mx-auto mb-1 opacity-50" />
+                <h2 className="text-xl font-black text-white">New Notebook</h2>
+                <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
                         <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2 ml-1">Notebook Title</label>
                         <input
@@ -196,7 +188,7 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
                             value={newNotebookName}
                             onChange={(e) => setNewNotebookName(e.target.value)}
                             placeholder="e.g. Monthly Expenses"
-                            className="w-full bg-slate-900 text-white border border-slate-700 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-sky-500 focus:outline-none transition"
+                            className="w-full bg-slate-900 text-white border border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:outline-none transition"
                             required
                         />
                     </div>
@@ -205,7 +197,7 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
                         <select
                             value={newNotebookCurrency}
                             onChange={(e) => setNewNotebookCurrency(e.target.value)}
-                            className="w-full bg-slate-900 text-white border border-slate-700 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-sky-500 focus:outline-none transition"
+                            className="w-full bg-slate-900 text-white border border-slate-700 rounded-xl px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:outline-none transition"
                         >
                             {currencies.map(c => (
                                 <option key={c.name} value={c.symbol}>{c.symbol} ({c.name})</option>
@@ -215,11 +207,11 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
                     <button
                         type="submit"
                         disabled={!newNotebookName.trim()}
-                        className="w-full bg-sky-500 hover:bg-sky-400 text-white font-black py-5 rounded-3xl transition-all shadow-xl active:scale-95 disabled:opacity-50"
+                        className="w-full bg-sky-500 hover:bg-sky-400 text-white font-black py-4 rounded-2xl transition-all shadow-xl active:scale-95 disabled:opacity-50"
                     >
                         Create Now
                     </button>
-                    <button type="button" onClick={() => setShowCreateForm(false)} className="w-full text-slate-500 font-bold py-2">Maybe Later</button>
+                    <button type="button" onClick={() => setShowCreateForm(false)} className="w-full text-slate-500 font-bold py-2 text-sm">Maybe Later</button>
                 </form>
             </div>
         </div>
