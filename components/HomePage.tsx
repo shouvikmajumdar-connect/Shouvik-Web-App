@@ -81,7 +81,7 @@ const HomePage: React.FC<HomePageProps> = ({ notebooks, onCreateNotebook, onSele
   return (
     <div className="space-y-5 pb-20">
       <header className="flex flex-col items-center py-6">
-        <h1 className="text-4xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-teal-400 mb-1 tracking-tighter">Track.it</h1>
+        <h1 className="text-4xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-teal-400 mb-1 tracking-tighter px-2 py-1"> Track.it </h1>
         <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">Smart Expense Monitoring</p>
       </header>
       
