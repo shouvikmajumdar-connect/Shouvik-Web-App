@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'track-it-v7';
+const CACHE_NAME = 'track-it-v8';
 const urlsToCache = [
   './',
   'index.html',
@@ -28,9 +28,18 @@ self.addEventListener('fetch', event => {
   // Navigation fallback strategy for SPA/PWA
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => {
-        return caches.match('index.html', { ignoreSearch: true });
-      })
+      fetch(event.request)
+        .then(response => {
+          // If the network request fails with 404, fallback to index.html (SPA routing)
+          if (!response || response.status === 404) {
+            return caches.match('index.html', { ignoreSearch: true });
+          }
+          return response;
+        })
+        .catch(() => {
+          // If offline or network error, fallback to index.html
+          return caches.match('index.html', { ignoreSearch: true });
+        })
     );
     return;
   }
