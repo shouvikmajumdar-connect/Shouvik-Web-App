@@ -1,6 +1,6 @@
 
-const CACHE_NAME = 'track-it-v8';
-const urlsToCache = [
+const CACHE_NAME = 'track-it-v9';
+const PRECACHE_URLS = [
   './',
   'index.html',
   'manifest.json',
@@ -10,7 +10,7 @@ const urlsToCache = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_URLS))
   );
   self.skipWaiting();
 });
@@ -25,28 +25,53 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
-  // Navigation fallback strategy for SPA/PWA
+  const requestURL = new URL(event.request.url);
+
+  // 1. Navigation (HTML) - Network First, fallback to cache, then fallback to index.html
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
-        .then(response => {
-          // If the network request fails with 404, fallback to index.html (SPA routing)
-          if (!response || response.status === 404) {
-            return caches.match('index.html', { ignoreSearch: true });
-          }
-          return response;
-        })
         .catch(() => {
-          // If offline or network error, fallback to index.html
-          return caches.match('index.html', { ignoreSearch: true });
+          return caches.match(event.request).then(response => {
+            if (response) return response;
+            return caches.match('index.html', { ignoreSearch: true });
+          });
         })
     );
     return;
   }
 
+  // 2. Assets (JS, CSS, Images) - Cache First, but update cache if found (Stale-While-Revalidate logic)
+  // OR simpler: Dynamic Runtime Caching (Cache First, put in cache if missing)
+  if (
+    event.request.destination === 'script' ||
+    event.request.destination === 'style' ||
+    event.request.destination === 'image'
+  ) {
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        return fetch(event.request).then(networkResponse => {
+            // Check if we received a valid response
+            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+              return networkResponse;
+            }
+            // Clone the response
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+            return networkResponse;
+        });
+      })
+    );
+    return;
+  }
+
+  // 3. Default fallback
   event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then(cachedResponse => {
-      return cachedResponse || fetch(event.request);
-    })
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
