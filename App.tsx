@@ -8,6 +8,18 @@ const App: React.FC = () => {
   const [notebooks, setNotebooks] = useState<Notebook[]>([]);
   const [selectedNotebookId, setSelectedNotebookId] = useState<string | null>(null);
 
+  // Handle Boot Loader Removal
+  useEffect(() => {
+    const loader = document.getElementById('boot-loader');
+    if (loader) {
+      // Small delay to ensure smooth visual transition after render
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => loader.remove(), 500);
+      }, 100);
+    }
+  }, []);
+
   useEffect(() => {
     try {
       const savedNotebooks = localStorage.getItem('notebooks');
