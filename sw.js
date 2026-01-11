@@ -1,10 +1,10 @@
 
-const CACHE_NAME = 'track-it-v11';
+const CACHE_NAME = 'track-it-v12';
 const PRECACHE_URLS = [
-  './',
-  'index.html',
-  'manifest.json',
-  'icon.svg',
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icon.svg',
   'https://cdn.tailwindcss.com'
 ];
 
@@ -16,6 +16,7 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('activate', event => {
+  // Immediately delete old caches to fix "stuck" versions
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
       keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
@@ -27,30 +28,25 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // 1. Navigation (HTML) - Network First, fallback to cache
+  // 1. Navigation (HTML) - Network First
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
         .then(response => {
-          // Check if valid response (200 OK).
           if (!response || response.status === 404) {
              throw new Error('Not found or 404');
           }
           return response;
         })
         .catch(() => {
-          // Fallback to index.html from cache
-          return caches.match('index.html', { ignoreSearch: true })
-            .then(cachedRes => {
-                if (cachedRes) return cachedRes;
-                return caches.match('./', { ignoreSearch: true });
-            });
+          return caches.match('/index.html')
+            .then(cachedRes => cachedRes || caches.match('index.html'));
         })
     );
     return;
   }
 
-  // 2. Assets (JS, CSS, Images) - Cache First, Network fallback
+  // 2. Assets (JS, CSS, Images) - Cache First with Strict MIME Check
   if (
     event.request.destination === 'script' ||
     event.request.destination === 'style' ||
@@ -62,15 +58,17 @@ self.addEventListener('fetch', event => {
           return cachedResponse;
         }
         return fetch(event.request).then(networkResponse => {
-            // Strict check: DO NOT cache or return 404s or HTML for scripts
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+            if (!networkResponse || networkResponse.status !== 200) {
               return networkResponse;
             }
             
-            // Extra safety: Don't cache if content-type is html for a script request
+            // CRITICAL: Prevent caching HTML as JS
             const contentType = networkResponse.headers.get('content-type');
-            if (event.request.destination === 'script' && contentType && contentType.includes('text/html')) {
-                return networkResponse;
+            if (event.request.destination === 'script') {
+                if (contentType && (contentType.includes('text/html') || contentType.includes('application/json'))) {
+                    // Do not cache this, do not return it. Let the browser fail correctly.
+                    return networkResponse;
+                }
             }
 
             const responseToCache = networkResponse.clone();
@@ -84,7 +82,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // 3. Default fallback
+  // 3. Default
   event.respondWith(
     caches.match(event.request).then(response => response || fetch(event.request))
   );
